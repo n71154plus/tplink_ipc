@@ -1,0 +1,508 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "TP-Link IPC",
+        "description": "Choose local LAN device or official Surveillance App cloud account.",
+        "menu_options": {
+          "local": "LAN camera / NVR",
+          "cloud": "Cloud account (official App)"
+        }
+      },
+      "local": {
+        "title": "TP-Link IPC (LAN)",
+        "description": "Local stok API used by tpSurveillance. Enable RTSP first. NVR history uses port 8000.",
+        "data": {
+          "host": "Host",
+          "port": "HTTP port",
+          "username": "Username",
+          "password": "Password",
+          "use_https": "Use HTTPS",
+          "verify_ssl": "Verify SSL",
+          "rtsp_port": "RTSP port",
+          "stream_path": "RTSP path (e.g. stream1)"
+        }
+      },
+      "cloud": {
+        "title": "TP-Link cloud account",
+        "description": "Login to n-wap-ipc (CN) with the official App account. Creates online/disk/IP sensors and privacy/LED/motion switches for cameras and NVRs via passthrough. Live view and cloud history still need media relay.",
+        "data": {
+          "username": "Cloud account (email or phone)",
+          "password": "Cloud password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect",
+      "invalid_auth": "Invalid credentials",
+      "device_locked": "Camera is temporarily locked after too many login attempts. Wait a few minutes before retrying.",
+      "cloud_locked": "Cloud account locked; wait or unlock in the App",
+      "unknown": "Unknown error"
+    },
+    "abort": {
+      "already_configured": "Already configured"
+    }
+  },
+  "entity": {
+    "camera": {
+      "camera_sub": {
+        "name": "Sub stream"
+      }
+    },
+    "sensor": {
+      "ip": {
+        "name": "IP address"
+      },
+      "disk_status": {
+        "name": "Storage status"
+      },
+      "disk_percent": {
+        "name": "Storage used"
+      },
+      "video_main": {
+        "name": "Main stream"
+      },
+      "preset_count": {
+        "name": "PTZ presets"
+      },
+      "recording_calendar": {
+        "name": "Recording calendar"
+      },
+      "cloud_device_count": {
+        "name": "Cloud device count"
+      },
+      "cloud_device_online": {
+        "name": "Cloud online status"
+      },
+      "cloud_wan_ip": {
+        "name": "WAN IP"
+      },
+      "cloud_wan_link": {
+        "name": "WAN link"
+      },
+      "cloud_wan_down_speed": {
+        "name": "WAN download speed"
+      },
+      "cloud_wan_up_speed": {
+        "name": "WAN upload speed"
+      },
+      "cloud_client_count": {
+        "name": "Connected clients"
+      },
+      "cloud_wan_uptime": {
+        "name": "WAN uptime"
+      },
+      "cloud_battery": {
+        "name": "Battery"
+      },
+      "battery": {
+        "name": "Battery"
+      },
+      "timing_reboot": {
+        "name": "Scheduled reboot"
+      },
+      "record_plan": {
+        "name": "Record plan"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Reboot"
+      },
+      "ptz_stop": {
+        "name": "PTZ stop"
+      },
+      "ptz_calibrate": {
+        "name": "PTZ calibrate"
+      },
+      "cloud_reboot": {
+        "name": "Cloud reboot"
+      },
+      "cloud_refresh": {
+        "name": "Refresh cloud"
+      },
+      "cloud_device_refresh": {
+        "name": "Refresh device state"
+      },
+      "trigger_alarm": {
+        "name": "Trigger alarm"
+      },
+      "doorbell_wakeup": {
+        "name": "Doorbell wakeup"
+      },
+      "format_disk": {
+        "name": "Format disk"
+      },
+      "format_sd": {
+        "name": "Format SD"
+      }
+    },
+    "switch": {
+      "cloud_mesh_led": {
+        "name": "Mesh LED"
+      },
+      "privacy": {
+        "name": "Privacy mode"
+      },
+      "led": {
+        "name": "Status LED"
+      },
+      "motion": {
+        "name": "Motion detection"
+      },
+      "motion_people": {
+        "name": "Motion people filter"
+      },
+      "motion_vehicle": {
+        "name": "Motion vehicle filter"
+      },
+      "people_detection": {
+        "name": "People detection"
+      },
+      "tamper": {
+        "name": "Tamper detection"
+      },
+      "intrusion": {
+        "name": "Intrusion detection"
+      },
+      "linecrossing": {
+        "name": "Line crossing detection"
+      },
+      "msg_push": {
+        "name": "Message push"
+      },
+      "siren": {
+        "name": "Alarm siren"
+      },
+      "siren_sound": {
+        "name": "Alarm sound"
+      },
+      "siren_light": {
+        "name": "Alarm light"
+      },
+      "target_track": {
+        "name": "Auto tracking"
+      },
+      "track_people": {
+        "name": "Track people"
+      },
+      "track_vehicle": {
+        "name": "Track vehicles"
+      },
+      "track_sound": {
+        "name": "Track by sound"
+      },
+      "video_cover": {
+        "name": "Video cover / mask"
+      },
+      "record_plan": {
+        "name": "Recording schedule"
+      },
+      "loop_record": {
+        "name": "Loop recording"
+      },
+      "media_encrypt": {
+        "name": "Media encryption"
+      },
+      "wide_dynamic": {
+        "name": "Wide dynamic range"
+      },
+      "hlc": {
+        "name": "Highlight compensation"
+      },
+      "dehaze": {
+        "name": "Dehaze"
+      },
+      "eis": {
+        "name": "Electronic image stabilization"
+      },
+      "backlight": {
+        "name": "Backlight compensation"
+      },
+      "people_enhance": {
+        "name": "Full-color people enhance"
+      },
+      "timing_reboot": {
+        "name": "Scheduled reboot"
+      },
+      "pir_detection": {
+        "name": "PIR detection"
+      },
+      "pir_led": {
+        "name": "PIR LED"
+      }
+    },
+    "select": {
+      "night_vision": {
+        "name": "Night vision mode",
+        "state": {
+          "inf_night_vision": "Infrared",
+          "md_night_vision": "Smart night vision",
+          "wtl_night_vision": "White light / full color"
+        }
+      },
+      "flip": {
+        "name": "Image flip",
+        "state": {
+          "off": "Off",
+          "center": "Center",
+          "left_and_right": "Left-right",
+          "up_and_down": "Up-down"
+        }
+      },
+      "rotate": {
+        "name": "Image rotate",
+        "state": {
+          "off": "Off",
+          "anticlockwise_90": "90° CCW",
+          "anticlockwise_180": "180° CCW"
+        }
+      },
+      "daynight_mode": {
+        "name": "Day/night switch mode",
+        "state": {
+          "common": "Normal",
+          "schedule": "Schedule",
+          "auto": "Auto"
+        }
+      },
+      "motion_sensitivity": {
+        "name": "Motion sensitivity",
+        "state": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        }
+      },
+      "tamper_sensitivity": {
+        "name": "Tamper sensitivity",
+        "state": {
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High"
+        }
+      },
+      "track_mode": {
+        "name": "Tracking mode",
+        "state": {
+          "pan": "Pan",
+          "tilt": "Tilt",
+          "pan_tilt": "Pan+tilt"
+        }
+      },
+      "scene_mode": {
+        "name": "Image scene mode",
+        "state": {
+          "normal": "Normal",
+          "street": "Street",
+          "indoor": "Indoor",
+          "low_illumination": "Low illumination"
+        }
+      },
+      "ir_type": {
+        "name": "IR lamp mode",
+        "state": {
+          "auto": "Auto",
+          "on": "On",
+          "off": "Off"
+        }
+      },
+      "white_lamp_type": {
+        "name": "White lamp mode",
+        "state": {
+          "auto": "Auto",
+          "on": "On",
+          "off": "Off"
+        }
+      },
+      "alarm_type": {
+        "name": "Alarm sound type"
+      }
+    },
+    "number": {
+      "motion_digital_sensitivity": {
+        "name": "Motion digital sensitivity"
+      },
+      "people_sensitivity": {
+        "name": "People detection sensitivity"
+      },
+      "track_back_time": {
+        "name": "Tracking return time"
+      },
+      "wtl_intensity": {
+        "name": "White lamp intensity"
+      },
+      "luma": {
+        "name": "Brightness"
+      },
+      "contrast": {
+        "name": "Contrast"
+      },
+      "saturation": {
+        "name": "Saturation"
+      },
+      "sharpness": {
+        "name": "Sharpness"
+      },
+      "chroma": {
+        "name": "Chroma"
+      },
+      "mic_volume": {
+        "name": "Microphone volume"
+      },
+      "speaker_volume": {
+        "name": "Speaker volume"
+      }
+    }
+  },
+  "services": {
+    "ptz_move": {
+      "name": "PTZ absolute move",
+      "description": "Move to normalized pan/tilt (-1..1)."
+    },
+    "ptz_step": {
+      "name": "PTZ step",
+      "description": "0=right 90=up 180=left 270=down"
+    },
+    "ptz_continuous": {
+      "name": "PTZ continuous move",
+      "description": "Continuous PTZ with velocity vectors."
+    },
+    "ptz_zoom": {
+      "name": "PTZ zoom",
+      "description": "Set absolute zoom."
+    },
+    "ptz_stop": {
+      "name": "PTZ stop",
+      "description": "Stop PTZ motion."
+    },
+    "ptz_calibrate": {
+      "name": "PTZ calibrate",
+      "description": "Run PTZ calibration."
+    },
+    "ptz_goto_preset": {
+      "name": "PTZ goto preset",
+      "description": "Go to a preset."
+    },
+    "ptz_set_preset": {
+      "name": "PTZ save preset",
+      "description": "Save current position as preset."
+    },
+    "reboot": {
+      "name": "Reboot",
+      "description": "Reboot camera / NVR."
+    },
+    "raw_request": {
+      "name": "Raw JSON request",
+      "description": "Send any APK-compatible payload to /stok=/ds."
+    },
+    "search_recording_days": {
+      "name": "Search recording days",
+      "description": "APK calendar (search_year_utility)."
+    },
+    "search_video_segments": {
+      "name": "Search video segments",
+      "description": "Day timeline clips (search_video_utility)."
+    },
+    "search_events": {
+      "name": "Search events",
+      "description": "get_event_list for playback_version 1.1."
+    },
+    "search_day_timeline": {
+      "name": "Search day timeline",
+      "description": "Best-effort day clips."
+    },
+    "refresh_all_calendars": {
+      "name": "Refresh all calendars",
+      "description": "Refresh recording calendars."
+    },
+    "play_recording": {
+      "name": "Play / download recording",
+      "description": "Download via NVRHttpStream and remux to /local/tplink_ipc/*.mp4."
+    },
+    "cloud_device_list": {
+      "name": "Cloud device list",
+      "description": "List devices bound to the official App cloud account."
+    },
+    "cloud_passthrough": {
+      "name": "Cloud passthrough",
+      "description": "Send a local-style JSON command to a device via n-wap-ipc passthrough.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        },
+        "payload": {
+          "name": "Request body",
+          "description": "Local-style JSON object (get/do methods)"
+        }
+      }
+    },
+    "cloud_reboot": {
+      "name": "Cloud reboot",
+      "description": "Reboot a device via cloud passthrough.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_get_disk": {
+      "name": "Cloud get disk",
+      "description": "Query harddisk_manage via cloud passthrough.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_get_record_plan": {
+      "name": "Cloud get record plan",
+      "description": "Query record_plan via cloud passthrough.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_get_device_info": {
+      "name": "Cloud get device info",
+      "description": "Query device_info.basic_info via cloud passthrough.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_get_biz_token": {
+      "name": "Get cloud bizToken",
+      "description": "Call getBizToken (ipc.media / ipc.appService)."
+    },
+    "cloud_get_relay_cluster": {
+      "name": "Get relay cluster",
+      "description": "getRelayClusterAddress for relayUrl / relayMasterUrl.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_prepare_relay": {
+      "name": "Prepare cloud media relay",
+      "description": "bizToken → cluster → relayMaster.",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    },
+    "cloud_play_recording": {
+      "name": "Cloud download recording",
+      "description": "Download MPEG-TS via relayservice (needs relayMaster).",
+      "fields": {
+        "device_id": {
+          "name": "Device ID"
+        }
+      }
+    }
+  }
+}

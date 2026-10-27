@@ -1,0 +1,718 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "TP-Link IPC",
+        "description": "選擇連線方式：區域網裝置，或官方安防 App（tpSurveillance）雲端帳號。",
+        "menu_options": {
+          "local": "區域網攝影機／NVR",
+          "cloud": "雲端帳號（官方 App）"
+        }
+      },
+      "local": {
+        "title": "TP-Link IPC（區域網）",
+        "description": "使用與 tpSurveillance 相同的區域網 stok API。請先在攝影機網頁啟用 RTSP。NVR 歷史回放使用連接埠 8000。",
+        "data": {
+          "host": "主機 IP",
+          "port": "HTTP 連接埠",
+          "username": "使用者名稱",
+          "password": "密碼",
+          "use_https": "使用 HTTPS",
+          "verify_ssl": "驗證 SSL 憑證",
+          "rtsp_port": "RTSP 連接埠",
+          "stream_path": "RTSP 路徑（例如 stream1）"
+        }
+      },
+      "cloud": {
+        "title": "TP-Link 雲端帳號",
+        "description": "使用與官方安防 App 相同的雲端帳號登入 n-wap-ipc（中國區）。會為攝影機／NVR 建立在線、硬碟、IP 與隱私／LED／移動偵測等控制（雲端透傳）。即時預覽與雲端歷史串流仍需媒體 relay。",
+        "data": {
+          "username": "雲端帳號（信箱或手機）",
+          "password": "雲端密碼"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "無法連線",
+      "invalid_auth": "帳號或密碼錯誤",
+      "device_locked": "攝影機因登入失敗次數過多已暫時鎖定，請等待數分鐘後再試（勿連續重試）",
+      "cloud_locked": "雲端帳號已鎖定，請稍後再試或在 App 解鎖",
+      "unknown": "未知錯誤"
+    },
+    "abort": {
+      "already_configured": "此裝置／帳號已設定"
+    }
+  },
+  "entity": {
+    "camera": {
+      "camera_sub": {
+        "name": "子碼流"
+      }
+    },
+    "sensor": {
+      "ip": {
+        "name": "IP 位址"
+      },
+      "disk_status": {
+        "name": "儲存狀態"
+      },
+      "disk_percent": {
+        "name": "儲存使用率"
+      },
+      "video_main": {
+        "name": "主碼流"
+      },
+      "preset_count": {
+        "name": "雲台預置點"
+      },
+      "recording_calendar": {
+        "name": "錄影日曆"
+      },
+      "cloud_device_count": {
+        "name": "雲端裝置數"
+      },
+      "cloud_device_online": {
+        "name": "雲端在線狀態"
+      },
+      "cloud_wan_ip": {
+        "name": "WAN IP"
+      },
+      "cloud_wan_link": {
+        "name": "WAN 連線"
+      },
+      "cloud_wan_down_speed": {
+        "name": "WAN 下載速度"
+      },
+      "cloud_wan_up_speed": {
+        "name": "WAN 上傳速度"
+      },
+      "cloud_client_count": {
+        "name": "連線裝置數"
+      },
+      "cloud_wan_uptime": {
+        "name": "WAN 連線時間"
+      },
+      "cloud_battery": {
+        "name": "電池電量"
+      },
+      "battery": {
+        "name": "電池電量"
+      },
+      "timing_reboot": {
+        "name": "定時重啟"
+      },
+      "record_plan": {
+        "name": "錄影計畫"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "重新啟動"
+      },
+      "ptz_stop": {
+        "name": "雲台停止"
+      },
+      "ptz_calibrate": {
+        "name": "雲台校準"
+      },
+      "cloud_reboot": {
+        "name": "雲端重新啟動"
+      },
+      "cloud_refresh": {
+        "name": "重新整理雲端"
+      },
+      "cloud_device_refresh": {
+        "name": "重新整理狀態"
+      },
+      "trigger_alarm": {
+        "name": "觸發警報"
+      },
+      "doorbell_wakeup": {
+        "name": "門鈴喚醒"
+      },
+      "format_disk": {
+        "name": "格式化硬碟"
+      },
+      "format_sd": {
+        "name": "格式化 SD"
+      }
+    },
+    "switch": {
+      "cloud_mesh_led": {
+        "name": "Mesh 指示燈"
+      },
+      "privacy": {
+        "name": "隱私遮蔽"
+      },
+      "led": {
+        "name": "狀態指示燈"
+      },
+      "motion": {
+        "name": "移動偵測"
+      },
+      "motion_people": {
+        "name": "移動偵測 · 人形過濾"
+      },
+      "motion_vehicle": {
+        "name": "移動偵測 · 車輛過濾"
+      },
+      "people_detection": {
+        "name": "人形偵測"
+      },
+      "tamper": {
+        "name": "遮擋報警"
+      },
+      "intrusion": {
+        "name": "區域入侵"
+      },
+      "linecrossing": {
+        "name": "越界偵測"
+      },
+      "msg_push": {
+        "name": "訊息推送"
+      },
+      "siren": {
+        "name": "報警器"
+      },
+      "siren_sound": {
+        "name": "聲光報警 · 聲音"
+      },
+      "siren_light": {
+        "name": "聲光報警 · 燈光"
+      },
+      "target_track": {
+        "name": "智能追蹤"
+      },
+      "track_people": {
+        "name": "追蹤人形"
+      },
+      "track_vehicle": {
+        "name": "追蹤車輛"
+      },
+      "track_sound": {
+        "name": "循聲追蹤"
+      },
+      "video_cover": {
+        "name": "視頻遮擋"
+      },
+      "record_plan": {
+        "name": "錄影計畫"
+      },
+      "loop_record": {
+        "name": "循環錄影"
+      },
+      "media_encrypt": {
+        "name": "媒體加密"
+      },
+      "wide_dynamic": {
+        "name": "寬動態"
+      },
+      "hlc": {
+        "name": "強光抑制"
+      },
+      "dehaze": {
+        "name": "透霧"
+      },
+      "eis": {
+        "name": "電子防抖"
+      },
+      "backlight": {
+        "name": "背光補償"
+      },
+      "people_enhance": {
+        "name": "全彩人形增強"
+      },
+      "timing_reboot": {
+        "name": "定時重啟"
+      },
+      "pir_detection": {
+        "name": "PIR 偵測"
+      },
+      "pir_led": {
+        "name": "PIR 指示燈"
+      }
+    },
+    "select": {
+      "night_vision": {
+        "name": "夜視模式",
+        "state": {
+          "inf_night_vision": "紅外夜視",
+          "md_night_vision": "智能夜視",
+          "wtl_night_vision": "全彩／白光"
+        }
+      },
+      "flip": {
+        "name": "畫面翻轉",
+        "state": {
+          "off": "關閉",
+          "center": "中心翻轉",
+          "left_and_right": "左右翻轉",
+          "up_and_down": "上下翻轉"
+        }
+      },
+      "rotate": {
+        "name": "畫面旋轉",
+        "state": {
+          "off": "關閉",
+          "anticlockwise_90": "逆時針 90°",
+          "anticlockwise_180": "逆時針 180°"
+        }
+      },
+      "daynight_mode": {
+        "name": "日夜切換",
+        "state": {
+          "common": "普通",
+          "schedule": "定時",
+          "auto": "自動"
+        }
+      },
+      "motion_sensitivity": {
+        "name": "移動偵測靈敏度",
+        "state": {
+          "low": "低",
+          "medium": "中",
+          "high": "高"
+        }
+      },
+      "tamper_sensitivity": {
+        "name": "遮擋報警靈敏度",
+        "state": {
+          "low": "低",
+          "medium": "中",
+          "high": "高"
+        }
+      },
+      "track_mode": {
+        "name": "追蹤方式",
+        "state": {
+          "pan": "水平",
+          "tilt": "垂直",
+          "pan_tilt": "水平＋垂直"
+        }
+      },
+      "scene_mode": {
+        "name": "圖像場景",
+        "state": {
+          "normal": "普通",
+          "street": "街道",
+          "indoor": "室內",
+          "low_illumination": "低照度"
+        }
+      },
+      "ir_type": {
+        "name": "紅外燈",
+        "state": {
+          "auto": "自動",
+          "on": "開啟",
+          "off": "關閉"
+        }
+      },
+      "white_lamp_type": {
+        "name": "白光燈",
+        "state": {
+          "auto": "自動",
+          "on": "開啟",
+          "off": "關閉"
+        }
+      },
+      "alarm_type": {
+        "name": "警報音類型"
+      }
+    },
+    "number": {
+      "motion_digital_sensitivity": {
+        "name": "移動偵測數位靈敏度"
+      },
+      "people_sensitivity": {
+        "name": "人形偵測靈敏度"
+      },
+      "track_back_time": {
+        "name": "追蹤返回時間"
+      },
+      "wtl_intensity": {
+        "name": "白光燈亮度"
+      },
+      "luma": {
+        "name": "亮度"
+      },
+      "contrast": {
+        "name": "對比度"
+      },
+      "saturation": {
+        "name": "飽和度"
+      },
+      "sharpness": {
+        "name": "銳利度"
+      },
+      "chroma": {
+        "name": "色度"
+      },
+      "mic_volume": {
+        "name": "麥克風音量"
+      },
+      "speaker_volume": {
+        "name": "喇叭音量"
+      }
+    }
+  },
+  "services": {
+    "ptz_move": {
+      "name": "雲台絕對移動",
+      "description": "移動到正規化 pan/tilt（-1…1）。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體",
+          "description": "目標攝影機"
+        },
+        "x": {
+          "name": "水平 (x)",
+          "description": "Pan"
+        },
+        "y": {
+          "name": "垂直 (y)",
+          "description": "Tilt"
+        }
+      }
+    },
+    "ptz_step": {
+      "name": "雲台點動",
+      "description": "0=右 90=上 180=左 270=下",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "direction": {
+          "name": "方向"
+        }
+      }
+    },
+    "ptz_continuous": {
+      "name": "雲台連續移動",
+      "description": "以速度向量連續移動雲台。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "pan": {
+          "name": "水平速度"
+        },
+        "tilt": {
+          "name": "垂直速度"
+        },
+        "zoom": {
+          "name": "變倍速度"
+        }
+      }
+    },
+    "ptz_zoom": {
+      "name": "雲台變倍",
+      "description": "設定絕對變倍。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "zoom": {
+          "name": "變倍"
+        }
+      }
+    },
+    "ptz_stop": {
+      "name": "雲台停止",
+      "description": "停止雲台移動。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        }
+      }
+    },
+    "ptz_calibrate": {
+      "name": "雲台校準",
+      "description": "執行雲台校準。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        }
+      }
+    },
+    "ptz_goto_preset": {
+      "name": "前往預置點",
+      "description": "雲台移動到指定預置點。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "preset_id": {
+          "name": "預置點 ID"
+        }
+      }
+    },
+    "ptz_set_preset": {
+      "name": "儲存預置點",
+      "description": "將目前位置存為預置點。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "preset_name": {
+          "name": "預置點名稱"
+        }
+      }
+    },
+    "reboot": {
+      "name": "重新啟動",
+      "description": "重新啟動攝影機／NVR。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        }
+      }
+    },
+    "raw_request": {
+      "name": "原始 JSON 請求",
+      "description": "傳送任意 APK 相容 JSON（method 為 get／set／do 等）到 /stok=/ds。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "payload": {
+          "name": "請求內容"
+        }
+      }
+    },
+    "search_recording_days": {
+      "name": "查詢錄影日期",
+      "description": "對應 App 錄影日曆（search_year_utility），回傳有錄影的 YYYYMMDD。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "start_date": {
+          "name": "開始日期",
+          "description": "YYYYMMDD 或 YYYY-MM-DD"
+        },
+        "end_date": {
+          "name": "結束日期"
+        },
+        "channel": {
+          "name": "通道（回放索引，0 起）"
+        }
+      }
+    },
+    "search_video_segments": {
+      "name": "查詢當日片段",
+      "description": "對應 App 時間軸片段（search_video_utility，NVR 可用）。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "date": {
+          "name": "日期",
+          "description": "YYYYMMDD"
+        },
+        "channel": {
+          "name": "通道"
+        },
+        "start_index": {
+          "name": "起始索引"
+        },
+        "end_index": {
+          "name": "結束索引"
+        }
+      }
+    },
+    "search_events": {
+      "name": "查詢事件列表",
+      "description": "playback_version 1.1 的 get_event_list（可能需要已連線 client）。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "start_time": {
+          "name": "開始時間"
+        },
+        "end_time": {
+          "name": "結束時間"
+        },
+        "channel": {
+          "name": "通道"
+        },
+        "client_id": {
+          "name": "用戶端 ID"
+        },
+        "start_index": {
+          "name": "起始索引"
+        },
+        "max_num": {
+          "name": "最大筆數"
+        }
+      }
+    },
+    "search_day_timeline": {
+      "name": "查詢當日時間軸",
+      "description": "優先片段列表，失敗則改查事件。NVR 露台／露台2 使用通道 0／2。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體"
+        },
+        "date": {
+          "name": "日期"
+        },
+        "channel": {
+          "name": "回放通道（0 起）"
+        }
+      }
+    },
+    "refresh_all_calendars": {
+      "name": "重新整理全部錄影日曆",
+      "description": "重新整理一台或全部 tplink_ipc 裝置的錄影日曆。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機實體（可選）"
+        }
+      }
+    },
+    "play_recording": {
+      "name": "下載錄影（MP4）",
+      "description": "下載片段並轉成 /local MP4（匯出用）。一般觀看請用 WebRTC 串流回放。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機／日曆實體"
+        },
+        "date": {
+          "name": "日期",
+          "description": "未指定起迄時使用"
+        },
+        "start_time": {
+          "name": "開始時間（Unix 秒）"
+        },
+        "end_time": {
+          "name": "結束時間（Unix 秒）"
+        },
+        "channel": {
+          "name": "回放通道（0 起）"
+        },
+        "segment_index": {
+          "name": "片段索引",
+          "description": "僅用日期時選第幾段（0=第一段）"
+        },
+        "max_seconds": {
+          "name": "最長秒數"
+        },
+        "max_bytes": {
+          "name": "最大位元組"
+        }
+      }
+    },
+    "stream_playback": {
+      "name": "WebRTC 串流回放",
+      "description": "Streamd → bridge → go2rtc，以 WebRTC／MSE 邊收邊播。",
+      "fields": {
+        "entity_id": {
+          "name": "攝影機／日曆實體"
+        },
+        "date": {
+          "name": "日期"
+        },
+        "start_time": {
+          "name": "開始時間（Unix 秒）"
+        },
+        "end_time": {
+          "name": "結束時間（Unix 秒）"
+        },
+        "channel": {
+          "name": "回放通道（0 起）"
+        },
+        "segment_index": {
+          "name": "片段索引"
+        },
+        "max_seconds": {
+          "name": "最長秒數"
+        }
+      }
+    },
+    "cloud_device_list": {
+      "name": "雲端裝置列表",
+      "description": "以官方 App 雲端帳號列出綁定裝置。"
+    },
+    "cloud_passthrough": {
+      "name": "雲端透傳",
+      "description": "經 n-wap-ipc passthrough 向指定 deviceId 下發本機風格 JSON 指令。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        },
+        "payload": {
+          "name": "請求內容",
+          "description": "本機風格 JSON 物件，例如 method 為 get／do 的指令"
+        }
+      }
+    },
+    "cloud_reboot": {
+      "name": "雲端重新啟動",
+      "description": "經雲端 passthrough 重啟裝置。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_get_disk": {
+      "name": "雲端查硬碟",
+      "description": "經雲端查詢硬碟／儲存狀態。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_get_record_plan": {
+      "name": "雲端查錄影計畫",
+      "description": "經雲端查詢錄影計畫。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_get_device_info": {
+      "name": "雲端查裝置資訊",
+      "description": "經雲端查詢 basic_info。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_get_biz_token": {
+      "name": "取得雲端 bizToken",
+      "description": "呼叫 getBizToken（ipc.media／ipc.appService）。"
+    },
+    "cloud_get_relay_cluster": {
+      "name": "查詢 Relay Cluster",
+      "description": "getRelayClusterAddress，取得 relayUrl／relayMasterUrl。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_prepare_relay": {
+      "name": "準備雲端媒體 Relay",
+      "description": "bizToken → cluster → relayMaster。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    },
+    "cloud_play_recording": {
+      "name": "雲端下載錄影",
+      "description": "經 relayservice 下載 MPEG-TS（需 relayMaster 成功）。",
+      "fields": {
+        "device_id": {
+          "name": "裝置 ID"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "domain": "tplink_ipc",
+  "name": "TP-Link IPC (China Surveillance)",
+  "version": "0.11.3",
+  "documentation": "https://github.com/n71154plus/tplink_ipc",
+  "issue_tracker": "https://github.com/n71154plus/tplink_ipc/issues",
+  "requirements": [],
+  "dependencies": [
+    "ffmpeg",
+    "stream"
+  ],
+  "codeowners": ["@n71154plus"],
+  "iot_class": "local_polling",
+  "config_flow": true
+}

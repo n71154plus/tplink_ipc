@@ -1,0 +1,680 @@
+ptz_move:
+  name: 雲台絕對移動
+  description: 移動到正規化 pan/tilt（-1…1）。接近角度的數值會自動縮放。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    x:
+      name: 水平 (x)
+      required: true
+      selector:
+        text:
+    y:
+      name: 垂直 (y)
+      required: true
+      selector:
+        text:
+
+ptz_step:
+  name: 雲台點動
+  description: "方向：0=右 90=上 180=左 270=下"
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    direction:
+      name: 方向
+      required: true
+      selector:
+        select:
+          options: ["0", "90", "180", "270", "LEFT", "RIGHT", "UP", "DOWN"]
+
+ptz_continuous:
+  name: 雲台連續移動
+  description: 以速度向量連續移動雲台。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    pan:
+      name: 水平速度
+      default: 0
+      selector:
+        number:
+          min: -1
+          max: 1
+          step: 0.05
+    tilt:
+      name: 垂直速度
+      default: 0
+      selector:
+        number:
+          min: -1
+          max: 1
+          step: 0.05
+    zoom:
+      name: 變倍速度
+      default: 0
+      selector:
+        number:
+          min: -1
+          max: 1
+          step: 0.05
+
+ptz_zoom:
+  name: 雲台變倍
+  description: 設定絕對變倍（0…1）。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    zoom:
+      name: 變倍
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 1
+          step: 0.05
+
+ptz_stop:
+  name: 雲台停止
+  description: 停止雲台移動。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+
+ptz_calibrate:
+  name: 雲台校準
+  description: 執行雲台校準（對應 App 雲台校準）。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+
+ptz_goto_preset:
+  name: 前往預置點
+  description: 雲台移動到指定預置點。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    preset_id:
+      name: 預置點 ID
+      required: true
+      selector:
+        text:
+
+ptz_set_preset:
+  name: 儲存預置點
+  description: 將目前位置存為預置點。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    preset_name:
+      name: 預置點名稱
+      required: true
+      selector:
+        text:
+
+reboot:
+  name: 重新啟動
+  description: 重新啟動攝影機／NVR。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+
+raw_request:
+  name: 原始 JSON 請求
+  description: 傳送任意 APK 相容 JSON（method 為 get／set／do 等）到 /stok=/ds
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    payload:
+      name: 請求內容
+      required: true
+      selector:
+        object:
+
+search_recording_days:
+  name: 查詢錄影日期
+  description: 對應 App 錄影日曆（search_year_utility），列出有本地錄影的日期。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    start_date:
+      name: 開始日期
+      required: true
+      description: YYYYMMDD 或 YYYY-MM-DD
+      example: "20260101"
+      selector:
+        text:
+    end_date:
+      name: 結束日期
+      required: true
+      example: "20260719"
+      selector:
+        text:
+    channel:
+      name: 通道（回放索引，0 起）
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+
+search_video_segments:
+  name: 查詢當日片段
+  description: 對應 App 時間軸片段（search_video_utility；NVR 可用）。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    date:
+      name: 日期
+      required: true
+      description: YYYYMMDD 或 YYYY-MM-DD
+      selector:
+        text:
+    channel:
+      name: 通道
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+    start_index:
+      name: 起始索引
+      default: 0
+      selector:
+        number:
+          min: 0
+          mode: box
+    end_index:
+      name: 結束索引
+      default: 99
+      selector:
+        number:
+          min: 0
+          mode: box
+
+search_events:
+  name: 查詢事件列表
+  description: playback_version 1.1 的 get_event_list（可能需要已連線媒體用戶端）。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    start_time:
+      name: 開始時間
+      required: true
+      description: Unix 秒或 YYYYMMDDHHMMSS
+      selector:
+        text:
+    end_time:
+      name: 結束時間
+      required: true
+      selector:
+        text:
+    channel:
+      name: 通道
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+    client_id:
+      name: 用戶端 ID
+      default: -1
+      selector:
+        number:
+          mode: box
+    start_index:
+      name: 起始索引
+      default: 0
+      selector:
+        number:
+          min: 0
+          mode: box
+    max_num:
+      name: 最大筆數
+      default: 100
+      selector:
+        number:
+          min: 1
+          max: 500
+          mode: box
+
+search_day_timeline:
+  name: 查詢當日時間軸
+  description: 優先片段列表，失敗則改查事件。NVR 露台／露台2 使用通道 0／2。
+  fields:
+    entity_id:
+      name: 攝影機實體
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+    date:
+      name: 日期
+      required: true
+      description: YYYYMMDD 或 YYYY-MM-DD
+      selector:
+        text:
+    channel:
+      name: 回放通道（0 起）
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+
+refresh_all_calendars:
+  name: 重新整理全部錄影日曆
+  description: 重新整理一台或全部 tplink_ipc 裝置的錄影日曆。
+  fields:
+    entity_id:
+      name: 攝影機實體（可選）
+      selector:
+        entity:
+          integration: tplink_ipc
+          domain: camera
+
+play_recording:
+  name: 下載錄影（MP4）
+  description: >
+    經本機媒體串流下載片段並轉成 /local/tplink_ipc/*.mp4（匯出用）。
+    一般觀看請用 stream_playback（WebRTC）。
+  fields:
+    entity_id:
+      name: 攝影機／日曆實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    date:
+      name: 日期
+      description: YYYYMMDD — 未指定起迄時用來選片段
+      selector:
+        text:
+    start_time:
+      name: 開始時間
+      description: Unix 秒（來自查詢當日片段）
+      selector:
+        text:
+    end_time:
+      name: 結束時間
+      selector:
+        text:
+    channel:
+      name: 回放通道（0 起）
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+    segment_index:
+      name: 片段索引
+      default: 0
+      description: 僅用日期時選第幾段（0 = 第一段）
+      selector:
+        number:
+          min: 0
+          mode: box
+    max_seconds:
+      name: 最長秒數
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 300
+          mode: box
+    max_bytes:
+      name: 最大位元組
+      default: 12000000
+      selector:
+        number:
+          min: 1000000
+          mode: box
+
+stream_playback:
+  name: WebRTC 串流回放
+  description: >
+    Streamd → 本機 bridge → go2rtc，以 WebRTC／MSE 邊收邊播（不先落地整段 MP4）。
+  fields:
+    entity_id:
+      name: 攝影機／日曆實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    date:
+      name: 日期
+      selector:
+        text:
+    start_time:
+      name: 開始時間
+      selector:
+        text:
+    end_time:
+      name: 結束時間
+      selector:
+        text:
+    channel:
+      name: 回放通道（0 起）
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 16
+          mode: box
+    segment_index:
+      name: 片段索引
+      default: 0
+      selector:
+        number:
+          min: 0
+          mode: box
+    max_seconds:
+      name: 最長秒數
+      default: 60
+      selector:
+        number:
+          min: 10
+          max: 600
+          mode: box
+
+cloud_device_list:
+  name: 雲端裝置列表
+  description: 以官方 App 雲端帳號列出綁定裝置（需先新增雲端整合）。
+
+cloud_passthrough:
+  name: 雲端透傳
+  description: 經 n-wap-ipc passthrough 向指定 deviceId 下發本機風格 JSON 指令。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      description: getDeviceList 回傳的 deviceId
+      selector:
+        text:
+    payload:
+      name: 請求內容
+      required: true
+      description: 本機風格 JSON 物件
+      selector:
+        object:
+
+cloud_reboot:
+  name: 雲端重新啟動
+  description: 經雲端 passthrough 重啟裝置（控制面，非媒體）。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+
+cloud_get_disk:
+  name: 雲端查硬碟
+  description: 經雲端 passthrough 查詢 harddisk_manage。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+
+cloud_get_record_plan:
+  name: 雲端查錄影計畫
+  description: 經雲端 passthrough 查詢 record_plan。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+
+cloud_get_device_info:
+  name: 雲端查裝置資訊
+  description: 經雲端 passthrough 查詢 device_info.basic_info。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+
+cloud_get_biz_token:
+  name: 取得雲端 bizToken
+  description: 呼叫 getBizToken（ipc.media／ipc.appService）。媒體路徑前置步驟。
+  fields:
+    biz_service_id:
+      name: bizServiceId
+      description: 留空則依序取 ipc.media 與 ipc.appService
+      selector:
+        text:
+
+cloud_get_relay_cluster:
+  name: 查詢 Relay Cluster
+  description: getRelayClusterAddress，取得 relayUrl／relayMasterUrl（次卧媒體前置）。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+
+cloud_prepare_relay:
+  name: 準備雲端媒體 Relay
+  description: bizToken → cluster → relayMaster（relayMaster 可能仍回 -82419）。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+    stream_type:
+      name: 串流類型
+      default: sdvod
+      selector:
+        select:
+          options:
+            - sdvod
+            - video
+            - download
+    channel:
+      name: 頻道
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 32
+          mode: box
+
+cloud_play_recording:
+  name: 雲端下載錄影
+  description: 經 relayservice 下載 MPEG-TS（需 relayMaster／request_relay 成功）。
+  fields:
+    device_id:
+      name: 裝置 ID
+      required: true
+      selector:
+        text:
+    start_time:
+      name: 開始時間（unix）
+      required: true
+      selector:
+        text:
+    end_time:
+      name: 結束時間（unix）
+      required: true
+      selector:
+        text:
+    channel:
+      name: 頻道
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 32
+          mode: box
+    max_seconds:
+      name: 最長秒數
+      default: 30
+      selector:
+        number:
+          min: 5
+          max: 600
+          mode: box
+    stream_type:
+      name: 串流類型
+      default: sdvod
+      selector:
+        text:
+
+format_disk:
+  name: 格式化硬碟
+  description: 格式化本機硬碟（APK harddisk_manage.format_hd）。會清空資料，請謹慎使用。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    disk_name:
+      name: 磁碟名稱
+      default: "1"
+      selector:
+        text:
+
+format_sd:
+  name: 格式化 SD 卡
+  description: 格式化 SD 卡（APK sd_manage.format_sd）。會清空資料。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    sd_name:
+      name: SD 名稱
+      default: "1"
+      selector:
+        text:
+
+get_format_status:
+  name: 查詢格式化進度
+  description: 查詢硬碟格式化狀態（APK get_format_status）。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    disk_name:
+      name: 磁碟名稱
+      default: "1"
+      selector:
+        text:
+
+set_timing_reboot:
+  name: 設定定時重啟
+  description: 設定定時重啟（APK timing_reboot）。day 為星期 bitmask（127=每天）。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    enabled:
+      name: 啟用
+      selector:
+        boolean:
+    day:
+      name: 星期 bitmask
+      selector:
+        number:
+          min: 0
+          max: 127
+          step: 1
+    time:
+      name: 時間 HH:MM
+      selector:
+        text:
+
+doorbell_wakeup:
+  name: 門鈴喚醒
+  description: 喚醒低電量門鈴（APK doorbell_ring.wakeup），以便讀取電池／PIR。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+
+trigger_alarm:
+  name: 觸發警報
+  description: 短暫開啟警報（喇叭／燈光），結束後還原原狀態。
+  fields:
+    entity_id:
+      name: 裝置實體
+      selector:
+        entity:
+          integration: tplink_ipc
+    seconds:
+      name: 持續秒數
+      default: 5
+      selector:
+        number:
+          min: 1
+          max: 60
+          step: 1
